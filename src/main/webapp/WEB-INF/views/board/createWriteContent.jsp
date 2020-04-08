@@ -59,15 +59,12 @@
 					    </div>
 					    
 						<div class="mb-3">
-							<c:forEach var="file1" items="${fileList }">
-								
-							</c:forEach>
 							<input type="hidden" name="sido" value="${sido }">
 							<input type="hidden" name="gugun" value="${gugun }">
 							<input type="hidden" name="theme" value="${theme }">
 							<input type="hidden" name="title" value="${title }">
-							<input type="hidden" name="fileList" value="${fileList }">
-							
+							<input type="hidden" name="fileList" value="${fileList2 }">
+							${fileList2 }
 							<input class="btn btn-info" type="submit" value="글쓰기">					
 						</div>
 					</form>

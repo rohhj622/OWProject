@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.prjct.hj.BoardMapper">
+
+	<insert id="insertPost">
+		insert into owprjct.post(mem_id,post_title,post_content,post_date,post_sido,post_gugun,post_theme,post_views) 
+		values(#{mem_id},#{post_title},#{post_content},sysdate(),#{post_sido},#{post_gugun},#{post_theme},0)
+	</insert>
+	
+	<select id="selectPostIdx" resultType="int"> <!-- 방금 올린 게시글 인덱스 가져오기. -->
+		select post_idx from owprjct.post 
+		where post_title=#{post_title} and post_content=#{post_content} and mem_id=#{mem_id}
+	</select>
+	
+	<insert id="insertAttachedFile">
+		insert into owprjct.attachedFile(post_idx,af_originalName,af_reName,af_fileSize,af_date,af_creaID)
+		values(#{post_idx},#{af_originalName},#{af_reName},#{af_fileSize},sysdate(),#{af_creaID})
+	</insert>
+	
+	<select id="selectMaxPostIdx" resultType="int">
+		select max(post_idx) from owprjct.post
+	</select>
+	
+	<select id="selectAllPost" resultType="com.prjct.hj.domain.PostVO">
+		select post_idx, mem_id, post_title,post_date,post_sido,post_gugun,post_theme,post_views
+		from owprjct.post order by post_idx desc
+	</select>
+</mapper>
