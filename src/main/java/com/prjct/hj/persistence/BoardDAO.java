@@ -2,6 +2,7 @@ package com.prjct.hj.persistence;
 
 import java.util.List;
 
+import com.prjct.hj.commons.pagination.Pagination;
 import com.prjct.hj.domain.AttachedFileVO;
 import com.prjct.hj.domain.PostVO;
 
@@ -10,5 +11,6 @@ public interface BoardDAO{
 	public int selectPostIdx(PostVO post)throws Exception;
 	public void insertAttachedFile(AttachedFileVO af)throws Exception;
 	public int selectMaxPostIdx() throws Exception;
-	public List<PostVO> selectAllPost() throws Exception;
+	public List<PostVO> selectAllPost(Pagination pagination) throws Exception;
+	public int selectPostCnt() throws Exception;
 }

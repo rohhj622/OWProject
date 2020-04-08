@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import com.prjct.hj.commons.pagination.Pagination;
 import com.prjct.hj.domain.AttachedFileVO;
 import com.prjct.hj.domain.PostVO;
 import com.prjct.hj.persistence.BoardDAO;
@@ -43,9 +44,15 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public List<PostVO> selectAllPost() throws Exception {
+	public List<PostVO> selectAllPost(Pagination pagination) throws Exception {
 		// TODO Auto-generated method stub
-		return dao.selectAllPost();
+		return dao.selectAllPost(pagination);
+	}
+
+	@Override
+	public int selectPostCnt() throws Exception {
+		// TODO Auto-generated method stub
+		return dao.selectPostCnt();
 	}
 
 

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.prjct.hj.commons.pagination.Pagination;
 import com.prjct.hj.commons.util.UploadVO;
 import com.prjct.hj.domain.AttachedFileVO;
 import com.prjct.hj.domain.PostVO;
@@ -156,9 +157,8 @@ public class BoardController {
 								@RequestParam("sido") String sido, 
 								@RequestParam("gugun") String gugun,
 								@RequestParam("title") String title,
-								@RequestParam("content1") String content) throws Exception {
+								@RequestParam("content1") String content) throws Exception{
 		
-		logger.info("1");
 		if(fileList2.isEmpty()) {
 			logger.info("엥?");
 		}
@@ -178,15 +178,38 @@ public class BoardController {
 		int postNum=service.selectPostIdx(post);
 		
 		for(AttachedFileVO af: fileList2) {
-			af.setPost_idx(postNum);
-
-			logger.info(af.getAf_reName());
-			
+			af.setPost_idx(postNum);		
 			service.insertAttachedFile(af);
 			
 		}
 		
 		return "board/createDone";
+	}
+	
+	@RequestMapping(value = "/board/postList", method = RequestMethod.GET)
+	public String postList(Locale locale, Model model,
+							@RequestParam(required = false, defaultValue = "1") int page,
+							@RequestParam(required = false, defaultValue = "1") int range) throws Exception {
+		
+		
+		logger.info(Integer.toString(page));
+		logger.info(Integer.toString(range));
+		
+		int listCnt = service.selectPostCnt(); //전체 게시글 개수	
+
+		Pagination pagination = new Pagination(); //Pagination 객체생성
+		pagination.pageInfo(page, range, listCnt);
+		
+		List<PostVO> list = service.selectAllPost(pagination);
+
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("list",list);
+		
+		int a = (int)Math.ceil(31.0/10.0); 
+		
+		logger.info("a:"+Integer.toString(a));
+		
+		return "board/boardView";
 	}
 }
 

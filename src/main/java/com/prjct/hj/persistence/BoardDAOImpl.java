@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.prjct.hj.commons.pagination.Pagination;
 import com.prjct.hj.domain.AttachedFileVO;
 import com.prjct.hj.domain.PostVO;
 
@@ -47,9 +48,15 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public List<PostVO> selectAllPost() throws Exception {
+	public List<PostVO> selectAllPost(Pagination pagination) throws Exception {
 		// TODO Auto-generated method stub
-		return session.selectList(namespace+".selectAllPost");
+		return session.selectList(namespace+".selectAllPost",pagination);
+	}
+
+	@Override
+	public int selectPostCnt() throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectOne(namespace+".selectPostCnt");
 	}
 }
 

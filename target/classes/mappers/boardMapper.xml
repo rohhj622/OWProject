@@ -23,8 +23,14 @@
 		select max(post_idx) from owprjct.post
 	</select>
 	
+	<!-- post pagination 을 위한 리미트 0,10  -->
 	<select id="selectAllPost" resultType="com.prjct.hj.domain.PostVO">
 		select post_idx, mem_id, post_title,post_date,post_sido,post_gugun,post_theme,post_views
-		from owprjct.post order by post_idx desc
+		from owprjct.post order by post_idx desc limit #{startList}, #{listSize}
+	</select>
+	
+	<!-- 게시글 총 갯수 가져오기 -->
+	<select id="selectPostCnt" resultType="int">
+		select count(post_idx) from owprjct.post
 	</select>
 </mapper>
