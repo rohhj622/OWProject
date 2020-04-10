@@ -2,9 +2,7 @@ package com.prjct.hj.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -15,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.prjct.hj.commons.pagination.Pagination;
-import com.prjct.hj.commons.util.UploadVO;
 import com.prjct.hj.domain.AttachedFileVO;
 import com.prjct.hj.domain.PostVO;
 import com.prjct.hj.service.BoardService;
@@ -205,11 +201,23 @@ public class BoardController {
 		model.addAttribute("pagination", pagination);
 		model.addAttribute("list",list);
 		
-		int a = (int)Math.ceil(31.0/10.0); 
-		
-		logger.info("a:"+Integer.toString(a));
-		
 		return "board/boardView";
+	}
+	
+	@RequestMapping(value = "/board/postDetail", method = RequestMethod.GET)
+	public String postDetail(Locale locale, Model model,
+							@RequestParam("idx") int post_idx ) throws Exception {
+		
+		logger.info(Integer.toString(post_idx));
+		PostVO post = service.selectPostOne(post_idx); //게시글 번호에 맞는 내용 가져오기.
+		
+		// 첨부파일 테이블에서 게시글 번호에 맞는 첨부파일 이름들 가져오기.
+		
+		
+		
+		model.addAttribute("post",post);
+		
+		return "board/postDetail";
 	}
 }
 

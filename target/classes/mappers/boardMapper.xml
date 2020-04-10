@@ -33,4 +33,11 @@
 	<select id="selectPostCnt" resultType="int">
 		select count(post_idx) from owprjct.post
 	</select>
+	
+	<!-- post_idx에 맞게 게시글 하나 가져오기  -->
+	<select id="selectPostOne" resultType="com.prjct.hj.domain.PostVO">
+		select post_idx, mem_id, post_title,post_date,post_sido,post_gugun,post_theme,post_views
+		from owprjct.post where post_idx=#{post_idx}
+	</select>
+	
 </mapper>

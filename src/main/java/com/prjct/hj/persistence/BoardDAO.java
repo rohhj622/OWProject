@@ -13,4 +13,5 @@ public interface BoardDAO{
 	public int selectMaxPostIdx() throws Exception;
 	public List<PostVO> selectAllPost(Pagination pagination) throws Exception;
 	public int selectPostCnt() throws Exception;
+	public PostVO selectPostOne(int post_idx) throws Exception;
 }

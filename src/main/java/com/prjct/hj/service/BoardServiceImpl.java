@@ -55,5 +55,11 @@ public class BoardServiceImpl implements BoardService{
 		return dao.selectPostCnt();
 	}
 
+	@Override
+	public PostVO selectPostOne(int post_idx) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.selectPostOne(post_idx);
+	}
+
 
 }

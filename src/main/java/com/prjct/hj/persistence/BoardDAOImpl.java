@@ -58,5 +58,11 @@ public class BoardDAOImpl implements BoardDAO {
 		// TODO Auto-generated method stub
 		return session.selectOne(namespace+".selectPostCnt");
 	}
+
+	@Override
+	public PostVO selectPostOne(int post_idx) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectOne(namespace+".selectPostOne",post_idx);
+	}
 }
 

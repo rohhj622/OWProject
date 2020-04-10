@@ -20,6 +20,9 @@
         <form action="<c:url value='/board/selectLoc' />">
         	<input type="submit" value="글쓰기"/>
         </form>
+        <form action="<c:url value='/board/postList' />">
+        	<input type="submit" value="게시판"/>
+        </form>
     </div>
   </body>
 </html>

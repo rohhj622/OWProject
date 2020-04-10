@@ -12,5 +12,7 @@ public interface BoardService {
 	public int selectMaxPostIdx() throws Exception; //가장 큰 글번호 가져오기 
 	public void insertAttachedFile(AttachedFileVO af) throws Exception; //첨부파일 내용 테이블 인서트 
 	public List<PostVO> selectAllPost(Pagination pagination) throws Exception; //전체 게시물 가져오기 
-	public int selectPostCnt() throws Exception;
+	public int selectPostCnt() throws Exception; //전체 게시글 수
+	public PostVO selectPostOne(int post_idx) throws Exception; //post 가져오기 
+	
 }
