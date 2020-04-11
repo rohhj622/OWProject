@@ -64,5 +64,23 @@ public class BoardDAOImpl implements BoardDAO {
 		// TODO Auto-generated method stub
 		return session.selectOne(namespace+".selectPostOne",post_idx);
 	}
+
+	@Override
+	public List<AttachedFileVO> selectAttachedFile(int post_idx) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectList(namespace+".selectAttachedFile",post_idx);
+	}
+
+	@Override
+	public int selectPostView(int post_idx) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectOne(namespace+".selectPostView",post_idx);
+	}
+
+	@Override
+	public void updatePostView(int post_idx) throws Exception {
+		// TODO Auto-generated method stub
+		session.update(namespace+".updatePostView",post_idx);
+	}
 }
 

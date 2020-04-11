@@ -61,5 +61,23 @@ public class BoardServiceImpl implements BoardService{
 		return dao.selectPostOne(post_idx);
 	}
 
+	@Override
+	public List<AttachedFileVO> selectAttachedFile(int post_idx) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.selectAttachedFile(post_idx);
+	}
+
+	@Override
+	public int selectPostView(int post_idx) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.selectPostView(post_idx);
+	}
+
+	@Override
+	public void updatePostView(int post_idx) throws Exception {
+		// TODO Auto-generated method stub
+		dao.updatePostView(post_idx);
+	}
+
 
 }

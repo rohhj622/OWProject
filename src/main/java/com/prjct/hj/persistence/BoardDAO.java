@@ -14,4 +14,9 @@ public interface BoardDAO{
 	public List<PostVO> selectAllPost(Pagination pagination) throws Exception;
 	public int selectPostCnt() throws Exception;
 	public PostVO selectPostOne(int post_idx) throws Exception;
+	public List<AttachedFileVO> selectAttachedFile(int post_idx) throws Exception;
+	public int selectPostView(int post_idx) throws Exception;
+	public void updatePostView(int post_idx) throws Exception;
+	
+	
 }

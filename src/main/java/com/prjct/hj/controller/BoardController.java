@@ -37,14 +37,22 @@ public class BoardController {
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
+	 * 
+	 * 1 -> 글쓰기 
+	 * 2 -> 게시글 리스트 
+	 * 3 -> 게시글 수정 
+	 * 4 -> 게시글 삭제 
+	 *  
 	 */
+	
+	// 1-1. 게시글쓰기 시작 & 지역 선택  
 	@RequestMapping(value = "/board/selectLoc")
 	public String selectLoc(Locale locale, Model model) {
-		//게시글쓰기 시작 
+		
 		return "board/createSelectLoc";
 	}
 	
-	
+	// 1-2. 장소 선택
 	@RequestMapping(value = "/board/selectTheme")
 	public String selectTheme(Locale locale, Model model, 
 								@RequestParam("sido1") String sido, @RequestParam("gugun1") String gugun  ) {
@@ -56,7 +64,7 @@ public class BoardController {
 	}
 	
 	
-	
+	// 1-3. 글 제목 입력 
 	@RequestMapping(value = "/board/writeTitle")
 	public String writeTitle(Locale locale, Model model, 
 								@RequestParam("theme1") String theme, @RequestParam("sido") String sido, @RequestParam("gugun") String gugun  ) {
@@ -68,6 +76,7 @@ public class BoardController {
 		return "board/createWriteTitle";
 	}
 	
+	// 1-4. 사진 업로드하기 
 	@RequestMapping(value = "/board/uploadPhoto")
 	public String uploadPhoto(Locale locale, Model model, 
 								@RequestParam("theme") String theme, 
@@ -83,6 +92,7 @@ public class BoardController {
 		return "board/createUploadPhoto";
 	}
 	
+	// 1-5. 내용 입력하기 
 	@RequestMapping(value = "/board/writeContent")
 	public String writeContent(Locale locale, Model model, 
 								@RequestParam("theme") String theme, 
@@ -147,6 +157,7 @@ public class BoardController {
 		return "board/createWriteContent";
 	}
 	
+	// 1-6. 글 작성 완료하기.
 	@RequestMapping(value = "/board/writePost")
 	public String writePost(Locale locale, Model model, PostVO post,
 								@RequestParam("theme") String theme, 
@@ -182,6 +193,8 @@ public class BoardController {
 		return "board/createDone";
 	}
 	
+	
+	// 2-1.  게시글 리스트 보여주기  
 	@RequestMapping(value = "/board/postList", method = RequestMethod.GET)
 	public String postList(Locale locale, Model model,
 							@RequestParam(required = false, defaultValue = "1") int page,
@@ -204,17 +217,23 @@ public class BoardController {
 		return "board/boardView";
 	}
 	
+	// 2-2. 게시글 클릭 시, 세부내용 보여주기, 조회수 +1
 	@RequestMapping(value = "/board/postDetail", method = RequestMethod.GET)
 	public String postDetail(Locale locale, Model model,
 							@RequestParam("idx") int post_idx ) throws Exception {
 		
 		logger.info(Integer.toString(post_idx));
-		PostVO post = service.selectPostOne(post_idx); //게시글 번호에 맞는 내용 가져오기.
+		
+		// 조회수 +1
+		service.updatePostView(post_idx);		
+		
+		//게시글 번호에 맞는 내용 가져오기.
+		PostVO post = service.selectPostOne(post_idx); 
 		
 		// 첨부파일 테이블에서 게시글 번호에 맞는 첨부파일 이름들 가져오기.
+		List<AttachedFileVO> fileList = service.selectAttachedFile(post_idx);
 		
-		
-		
+		model.addAttribute("fileList",fileList);
 		model.addAttribute("post",post);
 		
 		return "board/postDetail";

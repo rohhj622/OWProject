@@ -36,8 +36,26 @@
 	
 	<!-- post_idx에 맞게 게시글 하나 가져오기  -->
 	<select id="selectPostOne" resultType="com.prjct.hj.domain.PostVO">
-		select post_idx, mem_id, post_title,post_date,post_sido,post_gugun,post_theme,post_views
+		select post_idx, mem_id,post_title,post_content, post_date,post_sido,post_gugun,post_theme,post_views
 		from owprjct.post where post_idx=#{post_idx}
 	</select>
+	
+	<!-- post_idx에 맞는 파일 첨부파일 정보 가져오기. -->
+	<select id="selectAttachedFile" resultType="com.prjct.hj.domain.AttachedFileVO">
+		select af_idx,post_idx,af_reName
+		from owprjct.attachedFile where post_idx=#{post_idx}
+	</select>
+	
+	<!-- post_idx에 맞는 조회수 가져오기 -->
+	<select id="selectPostView" resultType="int">
+		select post_views from owprjct.post 
+		where post_idx=#{post_idx}
+	</select>
+	
+	<!-- 조회수 +1 -->
+	<update id="updatePostView">
+		update owprjct.post set post_views=post_views+1
+		where post_idx=#{post_idx}
+	</update>
 	
 </mapper>
