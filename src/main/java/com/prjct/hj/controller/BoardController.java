@@ -2,12 +2,16 @@ package com.prjct.hj.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +52,10 @@ public class BoardController {
 	// 1-1. 게시글쓰기 시작 & 지역 선택  
 	@RequestMapping(value = "/board/selectLoc")
 	public String selectLoc(Locale locale, Model model) {
+		
+		//String pdfPath = request.getSession().getServletContext().getRealPath("/uploadImg/1b4c6f0d-fdd0-4cee-a2c8-fe461d83c014_스캔.jpeg");
+		//logger.info(pdfPath);	
+		
 		
 		return "board/createSelectLoc";
 	}
@@ -98,13 +106,20 @@ public class BoardController {
 								@RequestParam("theme") String theme, 
 								@RequestParam("sido") String sido, 
 								@RequestParam("gugun") String gugun,
-								@RequestParam("title") String title, MultipartHttpServletRequest mtfRequest) throws Exception {
+								@RequestParam("title") String title, 
+								MultipartHttpServletRequest mtfRequest,
+								HttpServletRequest request) throws Exception {
 
 		List<MultipartFile> fileList1 = mtfRequest.getFiles("file1"); //업로드 파일 list MultipartFile 형태로 가져오기
 		fileList2.clear();
 		
-		String path = "/Users/hyunjin/Pictures/testFile/"; //저장 경로
+		String fileName2 = request.getSession().getServletContext().getRealPath("/uploadImg");
 		
+		logger.info("a:"+fileName2);
+		
+//		String path = "/Users/hyunjin/Documents/spring-ex/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/OWprjct/src/main/webapp/resources/uploadImg"; //저장 경로
+		String path = "/Users/hyunjin/Pictures/testFile";
+//		String path = "/OWprjct/src/main/webapp/resources/uploadImg";
 		int i=0;
 		
         for (MultipartFile mf : fileList1) {
@@ -113,6 +128,7 @@ public class BoardController {
         	logger.info("hi");
         	
             String originFileName = mf.getOriginalFilename(); // 원본 파일 명
+
             // 파일 이름 변경
     	    UUID uuid = UUID.randomUUID();
     	    
@@ -124,6 +140,7 @@ public class BoardController {
             logger.info("originFileName : " + originFileName);
             logger.info("fileSize : " + fileSize);
             logger.info("saveName : " + saveName);
+            logger.info("uploadRoute: " + path  );
             
             af.setAf_creaID("rohhj622"); //나중에 세션아이디 값으로 변경 
             af.setAf_fileSize(fileSize);
@@ -233,6 +250,19 @@ public class BoardController {
 		// 첨부파일 테이블에서 게시글 번호에 맞는 첨부파일 이름들 가져오기.
 		List<AttachedFileVO> fileList = service.selectAttachedFile(post_idx);
 		
+//		int i=1;
+//		
+//		for(AttachedFileVO af : fileList){
+//			String imgName = "img"+i;
+//			String fileName = "./img/"+af.getAf_reName();
+//			model.addAttribute(imgName,fileName);
+//			i++;
+//		}
+		
+//		model.addAttribute("i",i);
+//		Path p = Paths.get("/Users/hyunjin/Documents/spring-ex/OWprjct/src/main/resources/uploadImage/");
+		
+//		model.addAttribute("p", p);
 		model.addAttribute("fileList",fileList);
 		model.addAttribute("post",post);
 		

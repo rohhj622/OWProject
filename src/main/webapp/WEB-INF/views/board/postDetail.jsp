@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib  prefix="spring" uri="http://www.springframework.org/tags" %>     
 <%@ page session="false" %>
 <html>
   	<head>
@@ -15,9 +16,17 @@
 	    <!-- Bootstrap JS -->
 	    <link href="<c:url value='/js/bootstrap.js' />">
 
+		<style>
+			.max-small {
+			    width: auto; height: auto;
+			    max-width: 500px;
+			    max-height: 500px;
+			}
+		</style>
+		
 	    <title>Hello, world!</title>
 	    
-		
+			
 	</head>
 
 	<body>
@@ -40,7 +49,7 @@
 						</tr>
 						<tr>
 							<td>
-								작성자 
+								작성자
 							</td>
 							<td>
 								<c:out value="${post.mem_id}"/>
@@ -68,22 +77,15 @@
 							</td>
 						</tr>
 						<c:forEach var="fl" items="${fileList}">
-						
+							<tr>
+								<td>
+									<img class="max-small" src="/hj/img/${fl.af_reName }"/>
+									<%-- <img src="/uploadImg/${fl.af_reName}"> --%>
+								</td>
+							</tr>
 						</c:forEach>
 					</table>
 				</div>
-				
-				<div class="bg-white rounded shadow-sm">
-					<div class="board_title"><c:out value="${post.post_title}"/></div>
-					<div class="board_info_box">
-						<span class="board_author"><c:out value="${post.mem_id}"/>,</span><span class="board_date"><c:out value="${post.post_date }"/></span>
-					</div>
-					<div class="board_content">${post.post_content }</div>
-					<div class="board_tag">TAG : <c:out value="${post.post_sido}"/></div>
-					<div class="board_tag">TAG : <c:out value="${post.post_gugun}"/></div>
-					<div class="board_tag">TAG : <c:out value="${post.post_theme}"/></div>
-				</div>
-	
 				<div style="margin-top : 20px">
 					<button type="button" class="btn btn-sm btn-primary" id="btnUpdate">수정</button>
 					<button type="button" class="btn btn-sm btn-primary" id="btnDelete">삭제</button>
