@@ -15,8 +15,8 @@
 	</select>
 	
 	<insert id="insertAttachedFile">
-		insert into owprjct.attachedFile(post_idx,af_originalName,af_reName,af_fileSize,af_date,af_creaID)
-		values(#{post_idx},#{af_originalName},#{af_reName},#{af_fileSize},sysdate(),#{af_creaID})
+		insert into owprjct.attachedFile(post_idx,af_originalName,af_reName,af_fileSize,af_date,af_creaID,af_isDel)
+		values(#{post_idx},#{af_originalName},#{af_reName},#{af_fileSize},sysdate(),#{af_creaID},"N")
 	</insert>
 	
 	<select id="selectMaxPostIdx" resultType="int">
@@ -56,6 +56,16 @@
 	<update id="updatePostView">
 		update owprjct.post set post_views=post_views+1
 		where post_idx=#{post_idx}
+	</update>
+	
+	<!-- 글 삭제 -->
+	<delete id="deletePost">
+		delete from owprjct.post where post_idx=#{post_idx}
+	</delete>
+	
+	<!-- 삭제된 글의 첨부파일 삭제여부 변경 (N -> Y) -->
+	<update id="updateAttachedFileIsDel">
+		update owprjct.attachedFile set af_isDel="Y" where post_idx=#{post_idx}
 	</update>
 	
 </mapper>

@@ -79,5 +79,19 @@ public class BoardServiceImpl implements BoardService{
 		dao.updatePostView(post_idx);
 	}
 
+	@Override
+	public int deletePost(int post_idx) throws Exception {
+		// TODO Auto-generated method stub
+		dao.deletePost(post_idx);
+		return 1;
+	}
+
+	@Override
+	public int updateAttachedFileIsDel(int post_idx) throws Exception {
+		// TODO Auto-generated method stub
+		dao.updateAttachedFileIsDel(post_idx);
+		return 1;
+	}
+
 
 }

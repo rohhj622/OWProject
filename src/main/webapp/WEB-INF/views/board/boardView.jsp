@@ -15,6 +15,11 @@
 	    <link href="<c:url value='/js/bootstrap.js' />">
 
 	    <title>Hello, world!</title>
+	    
+	    <script type="text/javascript">
+			
+		</script>
+	    
 		<style>
 			.pagination {
 			   justify-content: center;
@@ -28,6 +33,7 @@
     	
     	<!-- Pagination -->
 		<script>	
+			
 			
 			//이전 버튼 이벤트		
 			function fn_prev(page, range, rangeSize) {

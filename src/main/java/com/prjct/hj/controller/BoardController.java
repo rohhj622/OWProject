@@ -20,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -249,24 +250,32 @@ public class BoardController {
 		
 		// 첨부파일 테이블에서 게시글 번호에 맞는 첨부파일 이름들 가져오기.
 		List<AttachedFileVO> fileList = service.selectAttachedFile(post_idx);
-		
-//		int i=1;
-//		
-//		for(AttachedFileVO af : fileList){
-//			String imgName = "img"+i;
-//			String fileName = "./img/"+af.getAf_reName();
-//			model.addAttribute(imgName,fileName);
-//			i++;
-//		}
-		
-//		model.addAttribute("i",i);
-//		Path p = Paths.get("/Users/hyunjin/Documents/spring-ex/OWprjct/src/main/resources/uploadImage/");
-		
-//		model.addAttribute("p", p);
+
 		model.addAttribute("fileList",fileList);
 		model.addAttribute("post",post);
 		
 		return "board/postDetail";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/board/deletePost", method = RequestMethod.POST)
+	public int deletePost(Locale locale, Model model,
+							@RequestParam("post_idx") int post_idx) throws Exception {
+		
+		logger.info(Integer.toString(post_idx));
+
+				
+		// 게시글 삭제
+		int result= service.deletePost(post_idx);
+		int result1=service.updateAttachedFileIsDel(post_idx);
+		
+		if(result==result1) {
+			logger.info("222222222");
+			return result;
+		}else {
+			logger.info("333333333");
+			return 0;
+		}
 	}
 }
 

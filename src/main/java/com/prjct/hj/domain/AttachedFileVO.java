@@ -8,6 +8,8 @@ public class AttachedFileVO{
 	private long af_fileSize;
 	private String af_date;
 	private String af_creaID;
+	private String af_isDel;
+	
 	
 	public int getAf_idx() {
 		return af_idx;
@@ -51,6 +53,11 @@ public class AttachedFileVO{
 	public void setAf_creaID(String af_creaID) {
 		this.af_creaID = af_creaID;
 	}
-	
+	public String getAf_isDel() {
+		return af_isDel;
+	}
+	public void setAf_isDel(String af_isDel) {
+		this.af_isDel = af_isDel;
+	}
 	
 }

@@ -1,7 +1,5 @@
 package com.prjct.hj.persistence;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -81,6 +79,22 @@ public class BoardDAOImpl implements BoardDAO {
 	public void updatePostView(int post_idx) throws Exception {
 		// TODO Auto-generated method stub
 		session.update(namespace+".updatePostView",post_idx);
+	}
+
+	@Override
+	public int deletePost(int post_idx) throws Exception {
+		// TODO Auto-generated method stub
+		session.delete(namespace+".deletePost",post_idx);
+		return 1;
+		
+	}
+
+	@Override
+	public int updateAttachedFileIsDel(int post_idx) throws Exception {
+		// TODO Auto-generated method stub
+		session.update(namespace+".updateAttachedFileIsDel",post_idx);
+		return 1;
+		
 	}
 }
 

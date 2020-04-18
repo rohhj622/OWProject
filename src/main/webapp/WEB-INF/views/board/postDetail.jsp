@@ -24,6 +24,19 @@
 			}
 		</style>
 		
+		<script type="text/javascript">
+		
+			function deleteOK(){
+				if(confirm("삭제하시겠습니까?")){
+					return true;
+				}else{
+					return false;
+				}
+			}
+			
+		
+		</script>
+		
 	    <title>Hello, world!</title>
 	    
 			
@@ -36,9 +49,23 @@
 		<article>
 			<div class="container" role="main">
 				<h2>board Content</h2>
-				
+				<div class="row">
+					<div class="col-sm-1">
+						<form action="">
+							<input class="btn btn-sm btn-primary" type="submit" value="수정"/>
+						</form>
+					</div>
+					<div class="col-sm-1">
+						<button type="button" class="deletePost" onclick="willUdeletePost()">삭제</button>
+					</div>
+					<div class="col-sm-1">
+						<form action="<c:url value='/board/postList'/>">
+							<input class="btn btn-sm btn-primary" type="button"  value="목록"/>
+						</form>
+					</div>
+				</div>
 				<div class="table-responsive">	
-					<table class="table table-striped table-sm">
+					<table class="table table-striped table-sm" style="text-align:center;">
 						<tr>
 							<td>
 								제목
@@ -78,22 +105,42 @@
 						</tr>
 						<c:forEach var="fl" items="${fileList}">
 							<tr>
-								<td>
+								<td colspan="5">
 									<img class="max-small" src="/hj/img/${fl.af_reName }"/>
-									<%-- <img src="/uploadImg/${fl.af_reName}"> --%>
 								</td>
 							</tr>
 						</c:forEach>
 					</table>
-				</div>
-				<div style="margin-top : 20px">
-					<button type="button" class="btn btn-sm btn-primary" id="btnUpdate">수정</button>
-					<button type="button" class="btn btn-sm btn-primary" id="btnDelete">삭제</button>
-					<button type="button" class="btn btn-sm btn-primary" id="btnList">목록</button>
+					${post.post_idx}
 				</div>
 			</div>
 		</article>
-	
+		<script type="text/javascript">
+		function willUdeletePost(){
+			if(!confirm("삭제하시겠습니까?")){
+			}
+			
+			var post_idx=${post.post_idx};
+			
+			$.ajax({
+				type:"POST",
+				url:"/board/deletePost",
+				dataType:"json",
+				data:{post_idx:post_idx},
+				success: function(response,txtStatus,xhr){
+					console.log(response);
+					if(ParseInt(response)>0){
+						alert("삭제되었습니다.");
+						location.href="/board/postList"
+					}else{
+						alert("오류발생")
+						return false;
+					}							
+				}
+				
+			});
+		};
+		</script>
 	</body>
 </html>
 

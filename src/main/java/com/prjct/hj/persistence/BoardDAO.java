@@ -17,6 +17,8 @@ public interface BoardDAO{
 	public List<AttachedFileVO> selectAttachedFile(int post_idx) throws Exception;
 	public int selectPostView(int post_idx) throws Exception;
 	public void updatePostView(int post_idx) throws Exception;
+	public int deletePost(int post_idx) throws Exception;
+	public int updateAttachedFileIsDel(int post_idx) throws Exception;
 	
 	
 }

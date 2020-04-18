@@ -17,6 +17,8 @@ public interface BoardService {
 	public List<AttachedFileVO> selectAttachedFile(int post_idx) throws Exception; //post_idx에 맞는 첨부파일 정보 가져오기
 	public int selectPostView(int post_idx) throws Exception; //post_idx에 맞는 조회수 가져오기 
 	public void updatePostView(int post_idx) throws Exception; // 조회수 + 1 
+	public int deletePost(int post_idx) throws Exception; // 게시글 삭제 
+	public int updateAttachedFileIsDel(int post_idx) throws Exception; // 삭제된 게시글의 첨부파일 삭제 여부 변경 (삭제됨으로:Y )
 	
 	
 }
