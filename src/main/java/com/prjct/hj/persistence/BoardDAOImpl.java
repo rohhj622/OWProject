@@ -45,11 +45,18 @@ public class BoardDAOImpl implements BoardDAO {
 		return session.selectOne(namespace+".selectMaxPostIdx");
 	}
 
+//	@Override
+//	public List<PostVO> selectAllPost(Pagination pagination) throws Exception {
+//		// TODO Auto-generated method stub
+//		return session.selectList(namespace+".selectAllPost",pagination);
+//	}
+	
 	@Override
 	public List<PostVO> selectAllPost(Pagination pagination) throws Exception {
 		// TODO Auto-generated method stub
 		return session.selectList(namespace+".selectAllPost",pagination);
 	}
+
 
 	@Override
 	public int selectPostCnt() throws Exception {
@@ -95,6 +102,30 @@ public class BoardDAOImpl implements BoardDAO {
 		session.update(namespace+".updateAttachedFileIsDel",post_idx);
 		return 1;
 		
+	}
+
+	@Override
+	public List<PostVO> selectPostSido(Pagination pagination, PostVO post) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectList(namespace+".selectPostSido",post);
+	}
+
+	@Override
+	public List<PostVO> selectPostSidoTheme(Pagination pagination, PostVO post) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectList(namespace+".selectPostSidoTheme",post);
+	}
+
+	@Override
+	public List<PostVO> selectPostSidoGugun(Pagination pagination, PostVO post) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectList(namespace+".selectPostSidoGugun",post);
+	}
+
+	@Override
+	public List<PostVO> selectPostTheme(Pagination pagination, PostVO post) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectList(namespace+".selectPostTheme",post);
 	}
 }
 

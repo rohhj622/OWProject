@@ -14,14 +14,13 @@
   </head>
   <body class="container">
     <div class="jumbotron">
-        <h1>Hello, world!</h1>
-        <p>The time on the server is ${serverTime}.</p>
+        <h1 style="text-align:center;">OWNWAY</h1>
         
-        <form action="<c:url value='/board/selectLoc' />">
-        	<input type="submit" value="글쓰기"/>
+        <form  style="justify-content:center;" action="<c:url value='/board/selectLoc' />">
+        	<input  class="btn" type="submit" value="글쓰기"/>
         </form>
         <form action="<c:url value='/board/postList' />">
-        	<input type="submit" value="게시판"/>
+        	<input class="btn" type="submit" value="게시판"/>
         </form>
     </div>
   </body>

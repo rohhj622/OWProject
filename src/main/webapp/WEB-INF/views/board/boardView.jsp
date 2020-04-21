@@ -94,6 +94,11 @@
 							</tr>
 						</thead>
 						<tbody>
+							<%
+								String a = request.getAttribute("listCnt").toString();
+								int listCnt = Integer.parseInt(a);
+							%>
+							
 							<c:choose>
 								<c:when test="${empty list }" >
 									<tr><td colspan="8" align="center">데이터가 없습니다.</td></tr>
@@ -101,7 +106,7 @@
 								<c:when test="${!empty list}">
 									<c:forEach var="list" items="${list}">
 										<tr>
-											<td><c:out value="${list.post_idx}"/></td>
+											<td><%-- <c:out value="${list.post_idx}"/>  --%><%=listCnt %></td>
 											<td> <a href="<c:url value='/board/postDetail?idx=${list.post_idx }' />"><c:out value="${list.mem_id}"/></a></td>
 											<td><c:out value="${list.post_title}"/></td>
 											<td><c:out value="${list.post_sido}"/></td>
@@ -113,6 +118,7 @@
 									</c:forEach>
 								</c:when>
 							</c:choose>
+							<%listCnt=listCnt-1; %>
 						</tbody>		
 					</table>
 				</div>

@@ -20,5 +20,10 @@ public interface BoardDAO{
 	public int deletePost(int post_idx) throws Exception;
 	public int updateAttachedFileIsDel(int post_idx) throws Exception;
 	
+	public List<PostVO> selectPostSido(Pagination pagination,PostVO post) throws Exception;
+	public List<PostVO> selectPostSidoTheme(Pagination pagination,PostVO post) throws Exception;
+	public List<PostVO> selectPostSidoGugun(Pagination pagination,PostVO post) throws Exception;
+	public List<PostVO> selectPostTheme(Pagination pagination,PostVO post) throws Exception;
+	
 	
 }

@@ -23,12 +23,16 @@
 		select max(post_idx) from owprjct.post
 	</select>
 	
-	<!-- post pagination 을 위한 리미트 0,10  -->
-	<select id="selectAllPost" resultType="com.prjct.hj.domain.PostVO">
+	<!-- post pagination 을 위한 리미트 0,20  -->
+	<!-- <select id="selectAllPost" resultType="com.prjct.hj.domain.PostVO">
 		select post_idx, mem_id, post_title,post_date,post_sido,post_gugun,post_theme,post_views
 		from owprjct.post order by post_idx desc limit #{startList}, #{listSize}
+	</select> -->
+	<select id="selectAllPost" resultType="com.prjct.hj.domain.PostVO">
+		select post_idx, mem_id, post_title,post_date,post_sido,post_gugun,post_theme,post_views
+		from owprjct.post order by post_idx desc
 	</select>
-	
+	 	
 	<!-- 게시글 총 갯수 가져오기 -->
 	<select id="selectPostCnt" resultType="int">
 		select count(post_idx) from owprjct.post
@@ -67,5 +71,29 @@
 	<update id="updateAttachedFileIsDel">
 		update owprjct.attachedFile set af_isDel="Y" where post_idx=#{post_idx}
 	</update>
+	
+	<!-- 시도만 선택 -->
+	<select id="selectPostSido" resultType="com.prjct.hj.domain.PostVO">
+		select post_idx, mem_id, post_title,post_date,post_sido,post_gugun,post_theme,post_views
+		from owprjct.post  where post_sido=#{post_sido} order by post_idx desc, post_gugun
+	</select>
+	
+	<!-- 시도 + 구군 선택 -->
+	<select id="selectPostSidoGugun" resultType="com.prjct.hj.domain.PostVO">
+		select post_idx, mem_id, post_title,post_date,post_sido,post_gugun,post_theme,post_views
+		from owprjct.post where post_sido=#{post_sido} and post_gugun=#{post_gugun} order by post_idx desc, post_theme
+	</select>
+	
+	<!-- 시도 + 장소 선택 -->
+	<select id="selectPostSidoTheme" resultType="com.prjct.hj.domain.PostVO">
+		select post_idx, mem_id, post_title,post_date,post_sido,post_gugun,post_theme,post_views
+		from owprjct.post where post_sido=#{post_sido} and post_theme=#{post_theme} order by post_idx desc
+	</select>
+	
+	<!-- 장소만 선택 -->
+	<select id="selectPostTheme" resultType="com.prjct.hj.domain.PostVO">
+		select post_idx, mem_id, post_title,post_date,post_sido,post_gugun,post_theme,post_views
+		from owprjct.post  where post_theme=#{post_theme} order by post_idx desc, post_sido,post_gugun
+	</select>
 	
 </mapper>

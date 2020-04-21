@@ -120,6 +120,7 @@ public class BoardController {
 		
 //		String path = "/Users/hyunjin/Documents/spring-ex/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/OWprjct/src/main/webapp/resources/uploadImg"; //저장 경로
 		String path = "/Users/hyunjin/Pictures/testFile";
+//		String path = "/usr/uploadImg";
 //		String path = "/OWprjct/src/main/webapp/resources/uploadImg";
 		int i=0;
 		
@@ -156,6 +157,7 @@ public class BoardController {
             
             try {
                 mf.transferTo(saveFile);
+                logger.info("123456");
             } catch (IllegalStateException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -213,27 +215,114 @@ public class BoardController {
 	
 	
 	// 2-1.  게시글 리스트 보여주기  
+//	@RequestMapping(value = "/board/postList", method = RequestMethod.GET)
+//	public String postList(Locale locale, Model model,
+//							@RequestParam(required = false, defaultValue = "1") int page,
+//							@RequestParam(required = false, defaultValue = "1") int range) throws Exception {
+//		
+//		
+//		logger.info(Integer.toString(page));
+//		logger.info(Integer.toString(range));
+//		
+//		int listCnt = service.selectPostCnt(); //전체 게시글 개수	
+//
+//		Pagination pagination = new Pagination(); //Pagination 객체생성
+//		pagination.pageInfo(page, range, listCnt);
+//		
+//		List<PostVO> list = service.selectAllPost(pagination);
+//
+//		model.addAttribute("pagination", pagination);
+//		model.addAttribute("list",list);
+//		model.addAttribute("listCnt",listCnt);
+//		
+//		return "board/boardView2";
+//	}
 	@RequestMapping(value = "/board/postList", method = RequestMethod.GET)
 	public String postList(Locale locale, Model model,
+							PostVO post,
 							@RequestParam(required = false, defaultValue = "1") int page,
-							@RequestParam(required = false, defaultValue = "1") int range) throws Exception {
-		
-		
-		logger.info(Integer.toString(page));
-		logger.info(Integer.toString(range));
+							@RequestParam(required = false, defaultValue = "1") int range,
+							@RequestParam(required = false, defaultValue = "시/도 선택") String sido,
+							@RequestParam(required = false, defaultValue = "구/군 선택") String gugun,
+							@RequestParam(required = false, defaultValue = "장소 선택") String theme) throws Exception {
 		
 		int listCnt = service.selectPostCnt(); //전체 게시글 개수	
-
-		Pagination pagination = new Pagination(); //Pagination 객체생성
-		pagination.pageInfo(page, range, listCnt);
 		
-		List<PostVO> list = service.selectAllPost(pagination);
-
-		model.addAttribute("pagination", pagination);
-		model.addAttribute("list",list);
+		logger.info(sido+":"+gugun+":"+theme);
 		
-		return "board/boardView";
+		if(sido.equals("시/도 선택")&gugun.equals("구/군 선택")&theme.equals("장소 선택")){
+			
+			Pagination pagination = new Pagination(); //Pagination 객체생성
+			pagination.pageInfo(page, range, listCnt);
+					
+			List<PostVO> list = service.selectAllPost(pagination);
+				
+			model.addAttribute("pagination", pagination);
+			model.addAttribute("list",list);
+			
+		}else if(gugun.equals("구/군 선택")&theme.equals("장소 선택")) {
+//			시만 선택
+			
+			post.setPost_sido(sido);
+			
+			Pagination pagination = new Pagination(); //Pagination 객체생성
+			pagination.pageInfo(page, range, listCnt);
+					
+			List<PostVO> list = service.selectPostSido(pagination,post);
+			
+			model.addAttribute("pagination", pagination);
+			model.addAttribute("list",list);
+			
+		}else if(sido.equals("시/도 선택")&gugun.equals("구/군 선택")) {
+			// 장소만 선택 
+			
+			logger.info("아아");
+			post.setPost_theme(theme);
+			
+			Pagination pagination = new Pagination(); //Pagination 객체생성
+			pagination.pageInfo(page, range, listCnt);
+					
+			List<PostVO> list = service.selectPostTheme(pagination,post);
+			
+			model.addAttribute("pagination", pagination);
+			model.addAttribute("list",list);
+			
+		}else if(theme.equals("장소 선택")) {
+//			시도 + 구군 선택
+			
+			post.setPost_sido(sido);
+			post.setPost_gugun(gugun);
+			
+			Pagination pagination = new Pagination(); //Pagination 객체생성
+			pagination.pageInfo(page, range, listCnt);
+					
+			List<PostVO> list = service.selectPostSidoGugun(pagination,post);
+			
+			model.addAttribute("pagination", pagination);
+			model.addAttribute("list",list);
+			
+		}else if(gugun.equals("구/군 선택")) {
+//			시도 + 장소 선택
+			
+			post.setPost_sido(sido);
+			post.setPost_theme(theme);
+			
+			
+			Pagination pagination = new Pagination(); //Pagination 객체생성
+			pagination.pageInfo(page, range, listCnt);
+					
+			List<PostVO> list = service.selectPostSidoTheme(pagination,post);
+			
+			model.addAttribute("pagination", pagination);
+			model.addAttribute("list",list);
+			
+		}
+		
+		model.addAttribute("listCnt",listCnt);
+		
+		return "board/boardView2";
 	}
+	
 	
 	// 2-2. 게시글 클릭 시, 세부내용 보여주기, 조회수 +1
 	@RequestMapping(value = "/board/postDetail", method = RequestMethod.GET)
@@ -257,13 +346,33 @@ public class BoardController {
 		return "board/postDetail";
 	}
 	
-	@ResponseBody
-	@RequestMapping(value = "/board/deletePost", method = RequestMethod.POST)
-	public int deletePost(Locale locale, Model model,
+
+//	@RequestMapping(value = "/board/deletePost", produces="application/json")
+//	@ResponseBody
+//	public String deletePost(Locale locale, Model model,
+//							@RequestParam("post_idx") int post_idx) throws Exception {
+//		
+//		logger.info("hi"+Integer.toString(post_idx));
+//				
+//		// 게시글 삭제
+//		int result= service.deletePost(post_idx);
+//		int result1=service.updateAttachedFileIsDel(post_idx);
+//		
+//		if(result==result1) {
+//			logger.info("222222222");
+//			return "good";
+//			
+//		}else {
+//			logger.info("333333333");
+//			return "bad";
+//		}
+//	}
+	
+	@RequestMapping(value = "/board/deletePost", produces="application/json")
+	public String deletePost(Locale locale, Model model,
 							@RequestParam("post_idx") int post_idx) throws Exception {
 		
-		logger.info(Integer.toString(post_idx));
-
+		logger.info("hi"+Integer.toString(post_idx));
 				
 		// 게시글 삭제
 		int result= service.deletePost(post_idx);
@@ -271,11 +380,9 @@ public class BoardController {
 		
 		if(result==result1) {
 			logger.info("222222222");
-			return result;
-		}else {
-			logger.info("333333333");
-			return 0;
+			
 		}
+		return "board/deleteDone";
 	}
 }
 

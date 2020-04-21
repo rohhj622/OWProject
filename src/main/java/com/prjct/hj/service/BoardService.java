@@ -20,5 +20,12 @@ public interface BoardService {
 	public int deletePost(int post_idx) throws Exception; // 게시글 삭제 
 	public int updateAttachedFileIsDel(int post_idx) throws Exception; // 삭제된 게시글의 첨부파일 삭제 여부 변경 (삭제됨으로:Y )
 	
+	// 정렬 위함 : 시도, 시도+장소, 시도+구군, 장소 
+	public List<PostVO> selectPostSido(Pagination pagination,PostVO post) throws Exception;
+	public List<PostVO> selectPostSidoTheme(Pagination pagination,PostVO post) throws Exception;
+	public List<PostVO> selectPostSidoGugun(Pagination pagination,PostVO post) throws Exception;
+	public List<PostVO> selectPostTheme(Pagination pagination,PostVO post) throws Exception;
+	
+	
 	
 }

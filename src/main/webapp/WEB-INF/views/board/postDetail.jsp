@@ -56,7 +56,11 @@
 						</form>
 					</div>
 					<div class="col-sm-1">
-						<button type="button" class="deletePost" onclick="willUdeletePost()">삭제</button>
+						<form action="<c:url value="/board/deletePost"/>" onclick="willUdeletePost()">
+							<input type="hidden" value="${post.post_idx }" name="post_idx"/>
+							<input class="btn btn-sm btn-primary" type="submit" value="삭제"/>
+						</form>
+						<!-- <button type="button" class="deletePost" onclick="willUdeletePost()">삭제</button> -->
 					</div>
 					<div class="col-sm-1">
 						<form action="<c:url value='/board/postList'/>">
@@ -106,39 +110,49 @@
 						<c:forEach var="fl" items="${fileList}">
 							<tr>
 								<td colspan="5">
-									<img class="max-small" src="/hj/img/${fl.af_reName }"/>
+									<img class="max-small" src="<c:url value='/hj/img/${fl.af_reName }'/>" />
 								</td>
 							</tr>
 						</c:forEach>
 					</table>
-					${post.post_idx}
 				</div>
 			</div>
 		</article>
 		<script type="text/javascript">
 		function willUdeletePost(){
-			if(!confirm("삭제하시겠습니까?")){
-			}
-			
-			var post_idx=${post.post_idx};
-			
-			$.ajax({
-				type:"POST",
-				url:"/board/deletePost",
-				dataType:"json",
-				data:{post_idx:post_idx},
-				success: function(response,txtStatus,xhr){
-					console.log(response);
-					if(ParseInt(response)>0){
-						alert("삭제되었습니다.");
-						location.href="/board/postList"
-					}else{
-						alert("오류발생")
-						return false;
-					}							
-				}
+			/* if(confirm("삭제하시겠습니까?")==false){
+				return false;
+			}else{
+				var post_idx=${post.post_idx};
 				
-			});
+				$.ajax({
+					url:"/hj/board/deletePost",
+					type:"POST",
+					data:{post_idx:post_idx},
+					dataType:"json",
+					success: function(response,txtStatus,xhr){
+						console.log(response);						
+						if(parseInt(response)>0){
+							alert("삭제되었습니다.");
+							location.href="/hj/board/postList"
+							
+						}else{
+							alert("오류발생")
+							return false;
+						}							
+					},
+					error:function(request, error){
+						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+					
+				});
+			} */
+			
+			if(confirm("삭제하시겠습니까?")==false){
+				return false;
+			}else{
+				return true;
+			}
 		};
 		</script>
 	</body>
